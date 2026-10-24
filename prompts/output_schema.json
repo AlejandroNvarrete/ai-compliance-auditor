@@ -1,0 +1,79 @@
+{
+  "type": "object",
+  "required": [
+    "tipo_documento",
+    "titulo_documento",
+    "resumen_ejecutivo",
+    "riesgo_global",
+    "criterios"
+  ],
+  "properties": {
+    "tipo_documento": {
+      "type": "string",
+      "enum": [
+        "politica_privacidad",
+        "contrato_servicios",
+        "especificacion_requisitos"
+      ]
+    },
+    "titulo_documento": {
+      "type": "string"
+    },
+    "resumen_ejecutivo": {
+      "type": "string"
+    },
+    "riesgo_global": {
+      "type": "string",
+      "enum": [
+        "bajo",
+        "medio",
+        "alto"
+      ]
+    },
+    "criterios": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "criterio",
+          "peso",
+          "estado",
+          "cita",
+          "hallazgo",
+          "recomendacion"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "criterio": {
+            "type": "string"
+          },
+          "peso": {
+            "type": "number"
+          },
+          "estado": {
+            "type": "string",
+            "enum": [
+              "cumple",
+              "parcial",
+              "no_cumple"
+            ]
+          },
+          "cita": {
+            "type": "string"
+          },
+          "hallazgo": {
+            "type": "string"
+          },
+          "recomendacion": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
