@@ -1,0 +1,32 @@
+# Stack completo: n8n + Qdrant + Gotenberg (HTML→PDF). Uso: docker compose up -d
+services:
+  n8n:
+    image: docker.n8n.io/n8nio/n8n:latest
+    restart: unless-stopped
+    ports: ["5678:5678"]
+    env_file: .env
+    environment:
+      - GENERIC_TIMEZONE=Europe/Madrid
+      - TZ=Europe/Madrid
+      - N8N_RUNNERS_ENABLED=true
+      - N8N_DIAGNOSTICS_ENABLED=false
+      - N8N_RESTRICT_FILE_ACCESS_TO=/home/node/.n8n-files
+    volumes:
+      - n8n_data:/home/node/.n8n
+      - ./reports:/home/node/.n8n-files
+    depends_on: [qdrant, gotenberg]
+
+  qdrant:
+    image: qdrant/qdrant:latest
+    restart: unless-stopped
+    ports: ["6333:6333"]
+    volumes:
+      - qdrant_data:/qdrant/storage
+
+  gotenberg:
+    image: gotenberg/gotenberg:8
+    restart: unless-stopped
+
+volumes:
+  n8n_data:
+  qdrant_data:
