@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Informe de cumplimiento · politica_privacidad_con_fallos.pdf</title>
+<style>
+  *{box-sizing:border-box} body{font-family:Inter,Segoe UI,Arial,sans-serif;color:#0f172a;margin:0;background:#f8fafc}
+  .wrap{max-width:900px;margin:0 auto;padding:32px 20px}
+  header{display:flex;justify-content:space-between;gap:24px;align-items:center;border-bottom:3px solid #0f172a;padding-bottom:16px}
+  h1{font-size:22px;margin:0} .sub{color:#475569;font-size:13px;margin-top:4px}
+  .score{text-align:center;min-width:150px} .score .n{font-size:48px;font-weight:800;color:#b91c1c;line-height:1}
+  .score .l{font-size:12px;font-weight:700;color:#b91c1c;letter-spacing:.05em}
+  .bar{height:10px;background:#e2e8f0;border-radius:6px;overflow:hidden;margin:20px 0}
+  .bar div{height:100%;width:23%;background:#b91c1c}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0}
+  .kpi{background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:12px;text-align:center}
+  .kpi b{display:block;font-size:22px} .kpi span{font-size:12px;color:#64748b}
+  .resumen{background:#fff;border-left:4px solid #b91c1c;padding:14px 16px;border-radius:4px}
+  table{width:100%;border-collapse:collapse;background:#fff;margin-top:20px}
+  td{border-bottom:1px solid #e2e8f0;padding:14px;vertical-align:top;font-size:14px}
+  td.id{font-weight:700;width:90px;white-space:nowrap} .peso{font-weight:400;color:#64748b;font-size:12px}
+  .crit{font-weight:600;margin-bottom:6px}
+  .badge{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;margin-bottom:4px}
+  td p{margin:8px 0}
+  blockquote{margin:10px 0;padding:8px 12px;background:#f1f5f9;border-left:3px solid #94a3b8;font-style:italic;color:#334155}
+  .ver{display:block;font-style:normal;font-size:11px;color:#64748b;margin-top:4px}
+  .rec{background:#eff6ff;padding:8px 10px;border-radius:4px}
+  footer{margin-top:24px;font-size:11px;color:#64748b}
+  @media(max-width:600px){header{flex-direction:column;align-items:flex-start}.kpis{grid-template-columns:repeat(2,1fr)}}
+  @media print{body{background:#fff}}
+</style></head><body><div class="wrap">
+<header>
+  <div>
+    <h1>Informe de Auditoría de Cumplimiento</h1>
+    <div class="sub">Política de Privacidad de TechNova Apps · politica privacidad</div>
+    <div class="sub">Archivo: politica_privacidad_con_fallos.pdf · 1 págs · ID audit_3 · 24/10/2026, 10:12:59</div>
+  </div>
+  <div class="score"><div class="n">23%</div><div class="l">NO CONFORME</div></div>
+</header>
+<div class="bar"><div></div></div>
+<div class="kpis">
+  <div class="kpi"><b>0</b><span>Cumplidos</span></div>
+  <div class="kpi"><b>2</b><span>Parciales</span></div>
+  <div class="kpi"><b>3</b><span>Incumplidos</span></div>
+  <div class="kpi"><b>ALTO</b><span>Riesgo</span></div>
+</div>
+<div class="resumen"><b>Resumen ejecutivo.</b> La política de privacidad analizada presenta deficiencias críticas en el cumplimiento del RGPD. Faltan elementos esenciales como las bases jurídicas del tratamiento, la lista completa de derechos, los plazos de conservación y la información sobre cesiones de datos.</div>
+<table>
+  <tr>
+    <td class="id">PRIV-01<div class="peso">peso 25</div></td>
+    <td>
+      <div class="crit">Identidad y datos de contacto del responsable del tratamiento (y del DPO si aplica).</div>
+      <span class="badge" style="background:#fef3c7;color:#92400e">PARCIAL</span>
+      <blockquote>“El responsable del tratamiento de sus datos es TechNova Apps S.L., con CIF B12345678 y domicilio en Calle Mayor 10, 28013 Madrid. Puede contactarnos en privacidad@technova.example.”<span class="ver">✔ cita verificada</span></blockquote>
+      <p><b>Hallazgo:</b> Se identifica al responsable, pero no se menciona si existe un Delegado de Protección de Datos (DPO).</p>
+      <p class="rec"><b>Recomendación:</b> Indicar explícitamente si la organización cuenta con un DPO y proporcionar sus datos de contacto si aplica.</p>
+    </td>
+  </tr>
+  <tr>
+    <td class="id">PRIV-02<div class="peso">peso 20</div></td>
+    <td>
+      <div class="crit">Finalidades del tratamiento Y base jurídica de cada una (art. 6 RGPD: consentimiento, contrato, interés legítimo...).</div>
+      <span class="badge" style="background:#fee2e2;color:#991b1b">NO CUMPLE</span>
+      <blockquote>“Tratamos sus datos para gestionar su cuenta de usuario, enviarle comunicaciones comerciales y mejorar nuestros servicios mediante analítica de uso.”<span class="ver">✔ cita verificada</span></blockquote>
+      <p><b>Hallazgo:</b> Se describen las finalidades, pero no se especifica la base jurídica (legitimación) para ninguna de ellas.</p>
+      <p class="rec"><b>Recomendación:</b> Añadir la base jurídica para cada finalidad (ej. ejecución de contrato para gestión de cuenta, consentimiento para comunicaciones comerciales).</p>
+    </td>
+  </tr>
+  <tr>
+    <td class="id">PRIV-03<div class="peso">peso 20</div></td>
+    <td>
+      <div class="crit">Derechos del interesado (acceso, rectificación, supresión, oposición, limitación, portabilidad) y cómo ejercerlos + derecho a reclamar ante la AEPD.</div>
+      <span class="badge" style="background:#fef3c7;color:#92400e">PARCIAL</span>
+      <blockquote>“Usted puede ejercer sus derechos de acceso, rectificación y supresión escribiendo a privacidad@technova.example, adjuntando copia de su documento de identidad.”<span class="ver">✔ cita verificada</span></blockquote>
+      <p><b>Hallazgo:</b> Faltan derechos (oposición, limitación, portabilidad) y no se informa sobre el derecho a reclamar ante la AEPD.</p>
+      <p class="rec"><b>Recomendación:</b> Incluir la lista completa de derechos del RGPD y añadir el derecho a presentar una reclamación ante la autoridad de control (AEPD).</p>
+    </td>
+  </tr>
+  <tr>
+    <td class="id">PRIV-04<div class="peso">peso 20</div></td>
+    <td>
+      <div class="crit">Plazo de conservación de los datos o criterios para determinarlo.</div>
+      <span class="badge" style="background:#fee2e2;color:#991b1b">NO CUMPLE</span>
+      
+      <p><b>Hallazgo:</b> El documento no menciona durante cuánto tiempo se conservarán los datos personales.</p>
+      <p class="rec"><b>Recomendación:</b> Incluir una cláusula que especifique el plazo de conservación o los criterios utilizados para determinarlo.</p>
+    </td>
+  </tr>
+  <tr>
+    <td class="id">PRIV-05<div class="peso">peso 15</div></td>
+    <td>
+      <div class="crit">Destinatarios / cesiones a terceros y transferencias internacionales (con garantías).</div>
+      <span class="badge" style="background:#fee2e2;color:#991b1b">NO CUMPLE</span>
+      
+      <p><b>Hallazgo:</b> No se informa sobre posibles cesiones a terceros ni sobre transferencias internacionales de datos.</p>
+      <p class="rec"><b>Recomendación:</b> Añadir información sobre si se ceden datos a terceros y, en caso de transferencias internacionales, detallar las garantías aplicadas.</p>
+    </td>
+  </tr></table>
+<footer>Generado automáticamente por n8n + RAG + LLM (Gemini). La puntuación se calcula de forma determinista a partir de los estados; las citas se verifican contra el texto original.  Este informe no constituye asesoramiento legal.</footer>
+</div></body></html>
