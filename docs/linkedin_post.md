@@ -1,13 +1,13 @@
 # Borrador post LinkedIn
 
-🛡️ He construido un **Auditor de Cumplimiento Documental con IA** que revisa una política de privacidad, un contrato o una especificación de requisitos en ~1 minuto.
+🛡️ He construido un **Auditor de Cumplimiento Documental con IA** que revisa una política de privacidad, un contrato o una especificación de requisitos en ~15 segundos.
 
 Subes un PDF → recibes un informe ejecutivo con puntuación, citas literales del documento, infracciones y recomendaciones redactadas.
 
 🔧 Stack
 • n8n (orquestación) · Form Trigger → Extract → Chunking → Embeddings
 • RAG con Qdrant (colección efímera por auditoría, se borra al terminar)
-• Agente IA con Gemini 2.5 Flash (temperatura 0) + tool de búsqueda vectorial
+• Agente IA con Gemini 3.1 Flash-Lite (temperatura 0) + tool de búsqueda vectorial
 • Salida tipada con JSON Schema · Informe HTML → PDF (Gotenberg)
 
 🧠 Lo que más me ha enseñado: **no fiarse del LLM**
