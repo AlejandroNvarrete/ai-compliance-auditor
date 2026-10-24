@@ -19,7 +19,7 @@
     },
     {
       "parameters": {
-        "content": "## 2 · Agente auditor\nGemini 2.5 Flash · temp 0 · tool `buscar_en_documento` (RAG) · salida JSON validada por schema",
+        "content": "## 2 · Agente auditor\nGemini 3.1 Flash-Lite · temp 0 · tool `buscar_en_documento` (RAG) · salida JSON validada por schema",
         "width": 700,
         "height": 620,
         "color": 6
@@ -247,14 +247,14 @@
     },
     {
       "parameters": {
-        "modelName": "models/gemini-2.5-flash",
+        "modelName": "models/gemini-3.1-flash-lite",
         "options": {
           "temperature": 0,
           "maxOutputTokens": 4096
         }
       },
       "id": "c988dab5-ab86-5422-98ed-7c23b21460c6",
-      "name": "Gemini 2.5 Flash",
+      "name": "Gemini Flash",
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1.1,
       "position": [
@@ -452,7 +452,7 @@
         ]
       ]
     },
-    "Gemini 2.5 Flash": {
+    "Gemini Flash": {
       "ai_languageModel": [
         [
           {
