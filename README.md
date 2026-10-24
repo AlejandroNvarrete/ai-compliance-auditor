@@ -1,10 +1,19 @@
 # 🛡️ AI Compliance Auditor — n8n · RAG · Qdrant · Gemini
 
-![n8n](https://img.shields.io/badge/n8n-workflow-EA4B71) ![RAG](https://img.shields.io/badge/RAG-Qdrant-DC244C) ![LLM](https://img.shields.io/badge/LLM-Gemini%202.5%20Flash-4285F4) ![tests](https://img.shields.io/badge/tests-11%20passing-brightgreen) ![cost](https://img.shields.io/badge/coste-0%E2%82%AC-success)
+![n8n](https://img.shields.io/badge/n8n-workflow-EA4B71) ![RAG](https://img.shields.io/badge/RAG-Qdrant-DC244C) ![LLM](https://img.shields.io/badge/LLM-Gemini%203.1%20Flash--Lite-4285F4) ![n8n](https://img.shields.io/badge/probado%20en-n8n%202.22-EA4B71) ![tests](https://img.shields.io/badge/tests-11%20passing-brightgreen) ![cost](https://img.shields.io/badge/coste-0%E2%82%AC-success)
 
 Sistema que audita un PDF (política de privacidad, contrato o SRS) contra una checklist normativa y devuelve un **informe ejecutivo** con puntuación de cumplimiento, citas **literales verificadas**, infracciones y recomendaciones. Coste: **0 €** con el free tier de Gemini.
 
 ![Informe de ejemplo](docs/ejemplo_informe.png)
+
+> Ejecución real (n8n 2.22, Gemini 3.1 Flash-Lite, ~15 s): [informe completo](docs/ejemplo_informe.html)
+
+## Resultados de prueba
+
+| Documento | Puntuación | Veredicto | Tiempo |
+|---|---|---|---|
+| `samples/politica_privacidad_con_fallos.pdf` | **23 %** | NO CONFORME · riesgo alto | ~14 s |
+| `samples/politica_privacidad_conforme.pdf` | **90 %** | CONFORME · riesgo bajo | ~15 s |
 
 ## Arquitectura
 
@@ -17,7 +26,7 @@ flowchart LR
   L[Data Loader] -.-> D
   S[Recursive Splitter<br/>1000/200] -.-> L
   D --> P[Code: colapsar<br/>N chunks→1 item]
-  P --> G{{AI Agent<br/>Gemini 2.5 Flash · T=0}}
+  P --> G{{AI Agent<br/>Gemini 3.1 Flash-Lite · T=0}}
   T[Tool: buscar_en_documento<br/>Qdrant retrieve top-5] -.-> G
   E2[Embeddings Gemini] -.-> T
   O[Structured Output Parser<br/>JSON Schema] -.-> G
@@ -37,7 +46,7 @@ flowchart LR
 | 4b | Data Loader + Chunking | `Default Data Loader` + `Recursive Character Text Splitter` | Chunks 1000 / overlap 200 + metadatos |
 | 5 | Preparar contexto agente | `Code` | Colapsa N items (1/chunk) a 1 → el agente se ejecuta una vez |
 | 6 | Agente Auditor | `AI Agent` | System prompt estricto, `maxIterations` 20, reintento |
-| 6a | Gemini 2.5 Flash | `Google Gemini Chat Model` | temperature 0 |
+| 6a | Gemini Flash | `Google Gemini Chat Model` (`gemini-3.1-flash-lite`) | temperature 0 |
 | 6b | buscar_en_documento | `Qdrant Vector Store` (retrieve-as-tool) | Tool RAG top-5 |
 | 6c | Schema JSON informe | `Structured Output Parser` | JSON Schema con enums → salida tipada |
 | 7 | Construir informe | `Code` | **Guardarraíles**: verifica cada cita contra el texto original; si `cumple` sin cita verificable → degrada a `parcial`. Score ponderado determinista. HTML + texto Slack |
@@ -83,7 +92,7 @@ n8n → **Workflows → Create → ⋯ → Import from File** → `workflows/com
 ### 3. Credenciales (2)
 | Credencial | Dónde | Valores |
 |---|---|---|
-| **Google Gemini (PaLM) API** | nodos *Gemini 2.5 Flash*, *Embeddings Gemini (indexado)*, *Embeddings Gemini (consulta)* | Host `https://generativelanguage.googleapis.com` · API Key de AI Studio |
+| **Google Gemini (PaLM) API** | nodos *Gemini Flash*, *Embeddings Gemini (indexado)*, *Embeddings Gemini (consulta)* | Host `https://generativelanguage.googleapis.com` · API Key de AI Studio |
 | **Qdrant API** | nodos *Indexar en Qdrant*, *buscar_en_documento* | URL `http://qdrant:6333` · API key vacía |
 
 Abre cada nodo con ⚠️ y selecciona la credencial.
@@ -91,7 +100,7 @@ Abre cada nodo con ⚠️ y selecciona la credencial.
 ### 4. Probar
 1. Abre *Formulario PDF* → **Test step** (o activa el workflow y usa la *Production URL*).
 2. Sube `samples/politica_privacidad_con_fallos.pdf` → tipo *Política de privacidad (RGPD)*.
-3. Esperado: ~40-60 %, fallos en PRIV-03/04/05. Con `samples/politica_privacidad_conforme.pdf` → ≥85 %.
+3. Esperado: < 50 %, fallos en PRIV-02/04/05. Con `samples/politica_privacidad_conforme.pdf` → ≥ 85 %.
 4. PDF del informe en `./reports/`.
 
 ### 5. Publicarlo (demo pública hoy)
@@ -104,9 +113,9 @@ Abre cada nodo con ⚠️ y selecciona la credencial.
 > Activa el workflow (toggle *Active*) y comparte la **Production URL** del formulario en LinkedIn.
 
 ## Alternativas de modelo
-- **OpenAI**: sustituye *Gemini 2.5 Flash* por `OpenAI Chat Model` (`gpt-4o-mini`) y ambos embeddings por `Embeddings OpenAI` (`text-embedding-3-small`). ⚠️ No mezcles modelos de embeddings entre indexado y consulta.
+- **OpenAI**: sustituye *Gemini Flash* por `OpenAI Chat Model` (`gpt-4o-mini`) y ambos embeddings por `Embeddings OpenAI` (`text-embedding-3-small`). ⚠️ No mezcles modelos de embeddings entre indexado y consulta.
 - **Sin Docker para la DB**: cambia los dos nodos Qdrant por `Simple Vector Store` (memoria) con la misma *Memory Key* `={{ $execution.id }}` y elimina *Borrar colección Qdrant*.
-- `gemini-1.5-flash` está retirado; usa `gemini-2.5-flash` / `gemini-2.5-flash-lite`.
+- `gemini-1.5-flash` está retirado y `gemini-2.5-flash` ya no está disponible para cuentas nuevas (404). `gemini-flash-latest` funciona pero en free tier sufre rate-limit (1-3 min por llamada). **Recomendado: `gemini-3.1-flash-lite`** (~15 s por auditoría completa).
 
 ## Optimización de costes
 | Palanca | Implementación |
@@ -117,7 +126,7 @@ Abre cada nodo con ⚠️ y selecciona la credencial.
 | Contexto mínimo | RAG top-5 × 1000 chars en vez de mandar el documento entero (~5x menos tokens de entrada por consulta) |
 | Iteraciones acotadas | `maxIterations: 20`, `maxOutputTokens: 4096`, `temperature: 0` |
 | Batch de embeddings | `embeddingBatchSize: 50` → menos peticiones → no golpeas el límite RPM |
-| Rate limits (429) | Reintento en el agente (2 intentos, 5 s). Si persiste, usa `gemini-2.5-flash-lite` (más cuota) |
+| Rate limits (429) | Reintento en el agente (2 intentos, 5 s) + modelo Flash-Lite (más cuota gratuita) |
 | Sin coste de infra | Todo local en Docker; Qdrant/Gotenberg self-hosted |
 | Privacidad | ⚠️ El free tier de Gemini puede usar los datos para mejorar productos: usa solo documentos públicos/de prueba |
 
